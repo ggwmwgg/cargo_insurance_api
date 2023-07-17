@@ -1,0 +1,40 @@
+version: '3'
+services:
+  cargo_insurance:
+    build: .
+    env_file: db.env
+    container_name: cargo_insurance
+    volumes:
+      - app:/cargo_insurance
+    ports:
+      - "8000:8000"
+    depends_on:
+      cargo_insurance_db:
+        condition: service_healthy
+    entrypoint: /cargo_insurance/entry.sh
+    networks:
+      - cargo_insurance_network
+  cargo_insurance_db:
+    image: postgres
+    restart: always
+    env_file: db.env
+    container_name: db
+    healthcheck:
+      test: ["CMD", "pg_isready", "-U", "db_user", "-d", "cargo_insurance_db"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+    volumes:
+      - database:/var/lib/postgresql/data
+    ports:
+      - "5431:5431"
+    networks:
+      - cargo_insurance_network
+
+volumes:
+    database:
+    app:
+
+networks:
+    cargo_insurance_network:
+        driver: bridge
