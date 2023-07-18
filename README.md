@@ -1,13 +1,13 @@
 <table align="right">
- <tr><td><a href="README_en.md"><img src="https://github.com/ggwmwgg/ggwmwgg/blob/main/images/us.png" height="13" alt=""> English</a></td></tr>
- <tr><td><b><img src="https://github.com/ggwmwgg/ggwmwgg/blob/main/images/ru_s.png" height="13" alt=""> Русский</b></td></tr>
+ <tr><td><b><img src="https://github.com/ggwmwgg/ggwmwgg/blob/main/images/us_s.png" height="13" alt=""> English</b></td></tr>
+ <tr><td><a href="README_ru.md"><img src="https://github.com/ggwmwgg/ggwmwgg/blob/main/images/ru.png" height="13" alt=""> Русский</a></td></tr>
 </table>
 
-## Сервис расчета стоимости страхования (REST API)
+## Insurance cost calculator (REST API)
 
-### Описание
-Микросервис расчета стоимости страхования в зависимости от типа груза и объявленной стоимости (ОС):
-- Тариф должен загружаться из файла или принимать подобную JSON структуру:
+### Description
+Microservice for calculating insurance cost depending on cargo type and declared value (DV):
+- Rate should load either from file or using JSON structure like below:
 ```
 {
     "2020-06-01": [
@@ -32,13 +32,13 @@
     ]
 }
 ```
-- Сервис должен посчитать стоимость страхования для запроса используя активный тариф.
-- Сервис возвращает (ОС * rate) в зависимости от указанного в запросе типа груза и даты.
-- Сервис разворачивается внутри Docker.
-- README.md содержит инструкцию по запуску сервиса.
-- Данные сервиса хранятся в PostgreSQL.
+- Service should be able to calculate insurance cost for request using current rate.
+- Service returns (DV * rate) depending on cargo type and date in request.
+- Service should be deployed inside Docker.
+- README.md contains detailed instruction for running service.
+- Data should is stored in PostgreSQL.
 
-#### Используемые технологии:
+#### Technologies used:
 - *Python*
 - *FastApi*
 - *Tortoise ORM*
@@ -46,19 +46,19 @@
 - *Docker*
 - *Docker-compose*
 
-#### Конфигурация:
-- Установите ```requirements.txt```.
-- Установите свои данные для подключения к PostgreSQL в ```db.env```.
-- Установите свои данные для healthcheck-a в ```docker-compose.yml``` на строчке 23.
-- Соберите контейнеры с помощью ```docker-compose build```.
-- Запустите контейнеры с помощью ```docker-compose up```, вы можете добавить флаг ```-d``` для запуска в фоновом режиме.
+#### Configuration:
+- Install ```requirements.txt```.
+- Set your PostgreSQL connection data in ```db.env```.
+- Set your healthcheck data in ```docker-compose.yml``` on line 23.
+- Build containers with ```docker-compose build```.
+- Run containers with ```docker-compose up```, you can add ```-d``` flag to run in background.
 - Visit ```http://127.0.0.1:8000/```.
-- Для остановки контейнеров используйте ```docker-compose down```.
+- To stop containers use ```docker-compose down```.
 
-#### Использование:
-- Для загрузки данных из файла используйте ```get``` запрос на ```/load_data```.
-- Для загрузки данных путем отправки json-объекта используйте ```post``` запрос на ```/load_data```.
-- Для расчета стоимости страхования используйте ```post``` запрос на ```/calculate_insurance```, передав параметрами ```date```, ```cargo_type``` и ```declared_value```.
+#### Usage:
+- To load data from file use ```get``` request on ```/load_data```.
+- To load data from json-object use ```post``` request on ```/load_data```.
+- To calculate insurance use ```post``` request on ```/calculate_insurance```, pass ```date```, ```cargo_type``` and ```declared_value``` as parameters.
 
-#### Возможные улучшения:
-Запросы на изменение приветствуются. Для внесения значительных изменений, пожалуйста, сначала создайте проблему, чтобы обсудить, что вы хотите изменить.
+#### Contributing
+Pull requests are welcome. For major changes please open an issue first.
